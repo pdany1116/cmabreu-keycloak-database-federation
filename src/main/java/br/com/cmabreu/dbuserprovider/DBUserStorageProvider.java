@@ -197,25 +197,25 @@ public class DBUserStorageProvider implements UserStorageProvider,
 
     @Override
     public Stream<UserModel> searchForUserStream(RealmModel realm, String search) {
-        logger.info("search for users: realm={0} search={1}", realm.getId(), search);
+        logger.info("search for users: realm={"+realm.getId()+"} search={"+search+"}");
         return internalSearchForUser(search, realm, null);
     }
 
     @Override
     public Stream<UserModel> searchForUserStream(RealmModel realm, String search, Integer firstResult, Integer maxResults) {
-        logger.info("search for users: realm={0} search={1} firstResult={2} maxResults={3}", realm.getId(), search, firstResult, maxResults);
+        logger.info("search for users: realm={"+realm.getId()+"} search={"+search+"} firstResult={"+firstResult+"} maxResults={"+maxResults+"}");
         return internalSearchForUser(search, realm, new PagingUtil.Pageable(firstResult, maxResults));
     }
 
     @Override
     public Stream<UserModel> searchForUserStream(RealmModel realm, Map<String, String> params, Integer firstResult, Integer maxResults) {
-        logger.info("search for users with params: realm={0} params={1}", realm.getId(), params);
+        logger.info("search for users with params (paged): realm={"+realm.getId()+"} params={"+params+"} firstResult={"+firstResult+"} maxResults={"+maxResults+"}");
         return internalSearchForUser(params.values().stream().findFirst().orElse(null), realm, null);
     }
 
     @Override
     public Stream<UserModel> searchForUserStream(RealmModel realm, Map<String, String> params) {
-        logger.info("search for users with params: realm={0} params={1}", realm.getId(), params);
+        logger.info("search for users with params: realm={"+realm.getId()+"} params={"+params+"}");
         return internalSearchForUser(params.values().stream().findFirst().orElse(null), realm, null);
     }
 

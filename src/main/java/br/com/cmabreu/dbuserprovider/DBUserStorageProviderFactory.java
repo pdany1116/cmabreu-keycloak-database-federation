@@ -53,7 +53,7 @@ public class DBUserStorageProviderFactory implements UserStorageProviderFactory<
     }
     
     private synchronized ProviderConfig configure(ComponentModel model) {
-        logger.info("Creating configuration for model: id={0} name={1}", model.getId(), model.getName());
+        logger.info("Creating configuration for model: id={"+model.getId()+"} name={"+model.getName()+"}");
         ProviderConfig providerConfig = new ProviderConfig();
         String         user           = model.get("user");
         String         password       = model.get("password");

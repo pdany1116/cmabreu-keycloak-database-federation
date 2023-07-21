@@ -32,7 +32,6 @@ import br.com.cmabreu.dbuserprovider.model.QueryConfigurations;
 import br.com.cmabreu.dbuserprovider.util.PBKDF2SHA256HashingUtil;
 import br.com.cmabreu.dbuserprovider.util.PagingUtil;
 import br.com.cmabreu.dbuserprovider.util.PagingUtil.Pageable;
-import lombok.extern.jbosslog.JBossLog;
 
 
 public class UserRepository {
@@ -49,6 +48,7 @@ public class UserRepository {
     
     
     private <T> T doQuery(String query, Pageable pageable, Function<ResultSet, T> resultTransformer, Object... params) {
+        logger.info("Query: {"+query+"} params: {"+Arrays.toString(params)+"} ");
         Optional<DataSource> dataSourceOpt = dataSourceProvider.getDataSource();
         if (dataSourceOpt.isPresent()) {
             DataSource dataSource = dataSourceOpt.get();
@@ -56,12 +56,23 @@ public class UserRepository {
                 if (pageable != null) {
                     query = PagingUtil.formatScriptWithPageable(query, pageable, queryConfigurations.getRDBMS());
                 }
-                logger.info("Query: {0} params: {1} ", query, Arrays.toString(params));
                 try (PreparedStatement statement = c.prepareStatement(query)) {
                     if (params != null) {
-                        for (int i = 1; i <= params.length; i++) {
-                            statement.setObject(i, params[i - 1]);
+
+                    	
+                    	// I've found a bug here: The user pass just one search param from interface and
+                    	// the query have more than one serach pattern in more than one attribute.
+                    	// Ex.: where foo=(?) or bar=(?)
+                    	// So we have more than one ? ( pattern ) and just one search parameter.
+                    	// The error was: No value specified for parameter 2.: org.postgresql.util.PSQLException: No value specified for parameter 2.
+                    	// So all I need to do is take this search param (just one = params[0]) and use it in every replace pattern ( ? ) in
+                    	// the query string.
+                    	long count = query.chars().filter(ch -> ch == '?').count();
+                        for (int i = 1; i <= count; i++) {
+                            statement.setObject(i, params[0] );
                         }
+                        
+                        
                     }
                     try (ResultSet rs = statement.executeQuery()) {
                         return resultTransformer.apply(rs);
@@ -72,6 +83,7 @@ public class UserRepository {
             }
             return null;
         }
+        logger.error("No database connection is present");
         return null;
     }
     
@@ -136,7 +148,7 @@ public class UserRepository {
     
     
     public Map<String, String> findUserById(String id) {
-        return Optional.ofNullable(doQuery(queryConfigurations.getFindById(), null, this::readMap, id))
+        return Optional.ofNullable(doQuery(queryConfigurations.getFindById(), null, this::readMap, Integer.valueOf(id) ) )
                        .orElse(Collections.emptyList())
                        .stream().findFirst().orElse(null);
     }
@@ -155,7 +167,7 @@ public class UserRepository {
     }
     
     public boolean validateCredentials(String username, String password) {
-    	logger.info("Validating credentials for {0}", username);
+    	logger.info("Validating credentials for {"+username+"}");
         String hash = Optional.ofNullable(doQuery(queryConfigurations.getFindPasswordHash(), null, this::readString, username)).orElse("");
         if (queryConfigurations.isBlowfish()) {
             return !hash.isEmpty() && BCrypt.verifyer().verify(password.toCharArray(), hash).verified;
