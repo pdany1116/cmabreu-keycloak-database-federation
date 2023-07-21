@@ -24,9 +24,10 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     private Logger logger = LoggerFactory.getLogger( UserAdapter.class );
     
     public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel model, Map<String, String> data, boolean allowDatabaseToOverwriteKeycloak) {
-        super(session, realm, model);
+    	super(session, realm, model);
         this.keycloakId = StorageId.keycloakId(model, data.get("id"));
         this.username = data.get("username");
+    	logger.info( "UserAdapter constructor, username={0}", this.username );
         try {
           Map<String, List<String>> attributes = this.getAttributes();
           for (Entry<String, String> e : data.entrySet()) {
@@ -38,11 +39,11 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
                 }
               }
               newValues.add(StringUtils.trimToNull(e.getValue()));
+              logger.info("  > " + e.getKey() );
               this.setAttribute(e.getKey(), newValues.stream().filter(Objects::nonNull).collect(Collectors.toList()));
           }
         } catch(Exception e) {
         	logger.error( e.getMessage() );
-        	logger.error( "UserAdapter constructor, username={0}", this.username );
         }
     }
 
@@ -62,5 +63,6 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
         this.username = username;
     }
 
+  
 
 }

@@ -37,7 +37,7 @@ public class DataSourceProvider implements Closeable {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setUsername(user);
         hikariConfig.setPassword(pass);
-        hikariConfig.setPoolName(StringUtils.capitalize("SINGULAR-USER-PROVIDER-" + name + SIMPLE_DATE_FORMAT.format(new Date())));
+        hikariConfig.setPoolName(StringUtils.capitalize("CMABREU-USER-PROVIDER-" + name + SIMPLE_DATE_FORMAT.format(new Date())));
         hikariConfig.setJdbcUrl(url);
         hikariConfig.setConnectionTestQuery(rdbms.getTestString());
         hikariConfig.setDriverClassName(rdbms.getDriver());

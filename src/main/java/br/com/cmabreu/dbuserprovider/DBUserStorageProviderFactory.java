@@ -20,9 +20,7 @@ import com.google.auto.service.AutoService;
 import br.com.cmabreu.dbuserprovider.model.QueryConfigurations;
 import br.com.cmabreu.dbuserprovider.persistence.DataSourceProvider;
 import br.com.cmabreu.dbuserprovider.persistence.RDBMS;
-import lombok.extern.jbosslog.JBossLog;
 
-@JBossLog
 @AutoService(UserStorageProviderFactory.class)
 public class DBUserStorageProviderFactory implements UserStorageProviderFactory<DBUserStorageProvider> {
 	private Logger logger = LoggerFactory.getLogger( DBUserStorageProviderFactory.class );

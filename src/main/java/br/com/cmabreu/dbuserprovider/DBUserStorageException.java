@@ -2,7 +2,9 @@ package br.com.cmabreu.dbuserprovider;
 
 public class DBUserStorageException extends RuntimeException {
 
-    public DBUserStorageException(String message, Throwable cause) {
+	private static final long serialVersionUID = 1L;
+
+	public DBUserStorageException(String message, Throwable cause) {
         super(message, cause);
     }
 

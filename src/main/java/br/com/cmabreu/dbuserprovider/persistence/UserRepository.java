@@ -35,7 +35,6 @@ import br.com.cmabreu.dbuserprovider.util.PagingUtil.Pageable;
 import lombok.extern.jbosslog.JBossLog;
 
 
-@JBossLog
 public class UserRepository {
     
     private Logger logger = LoggerFactory.getLogger( UserRepository.class );
@@ -156,6 +155,7 @@ public class UserRepository {
     }
     
     public boolean validateCredentials(String username, String password) {
+    	logger.info("Validating credentials for {0}", username);
         String hash = Optional.ofNullable(doQuery(queryConfigurations.getFindPasswordHash(), null, this::readString, username)).orElse("");
         if (queryConfigurations.isBlowfish()) {
             return !hash.isEmpty() && BCrypt.verifyer().verify(password.toCharArray(), hash).verified;
