@@ -1,26 +1,26 @@
-# singular-keycloak-database-federation
+# cmabreu-keycloak-database-federation
 
+### Compatible with Keycloak 21.1.2 quarkus based.
 
+Based on ChemaDeveloper's singular-keycloak-database-federation
 
-### Compatible with Keycloak 17+ quarkus based.
+https://github.com/ChemaDeveloper/singular-keycloak-database-federation
 
-### ** Keycloak 19+ ** KNOWN ISSUE:
+wich is a fork from opensingular singular-keycloak-database-federation
 
-#### New Theme breaks custom providers, to overcome this problem, follow these steps:
+https://github.com/opensingular/singular-keycloak-database-federation
 
+## Help Wanted
 
- - Click "Realm Settings" on the left menu
- - Then click the tab "Themes"
- - And, for the selection input labeled "Admin console theme", select "keycloak"
- - Logoff and login again
- - Now, if you try to configure this provider again, keycloak should render all configuration fields and everything else should work fine.
- 
- See issue #19 for further information.
+Your help is welcome if you want to keep this repository up to date.
 
+## This is not a fork. What I've done here:
 
-
-**For older versions look at older_versions branch.
-
+ - Updated to use Keycloak 21.1.2 version
+ - Use the legacy Database Support libs. I don't know how to use the new ones.
+ - Changed the log engine (removed the JBossLog annotation)
+ - 
+## What is this?
 
 Keycloak User Storage SPI for Relational Databases (Keycloak User Federation, supports postgresql, mysql, oracle and mysql).
 
@@ -33,12 +33,9 @@ Keycloak User Storage SPI for Relational Databases (Keycloak User Federation, su
 - Keycloak Postgres Database Integration 
 - Keycloak blowfish bcrypt support
 
+## Attention!
 
-
-## Usage
-
-    Fully compatible with Singular Studio NOCODE. See https://www.studio.opensingular.com/
-    
+    Keycloak was changed the way to implement DBUserStorageProvider. If you know how to do it now, please tell us.
 
 ## Configuration
 
@@ -77,9 +74,8 @@ Just add a mapper to client mappers with the same name as the returned column al
         $ ./bin/kc.sh build
         $ ./bin/kc.sh start
 
-## For futher information see:
-    - https://github.com/keycloak/keycloak/issues/9833
-    - https://www.keycloak.org/docs/latest/server_development/#packaging-and-deployment
+## Issues:
+    Open a ticket as usual. I'll do my best to answer.
     
     
 
