@@ -67,7 +67,7 @@ public class UserRepository {
                     	// The error was: No value specified for parameter 2.: org.postgresql.util.PSQLException: No value specified for parameter 2.
                     	// So all I need to do is take this search param (just one = params[0]) and use it in every replace pattern ( ? ) in
                     	// the query string.
-                    	long count = query.chars().filter(ch -> ch == '?').count();
+                    	long count = query.chars().filter(ch -> ch == '?').count(); 
                         for (int i = 1; i <= count; i++) {
                             statement.setObject(i, params[0] );
                         }

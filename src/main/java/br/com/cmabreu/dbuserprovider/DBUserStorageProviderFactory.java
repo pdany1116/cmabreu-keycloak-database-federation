@@ -37,7 +37,7 @@ public class DBUserStorageProviderFactory implements UserStorageProviderFactory<
     
     @Override
     public void init(Config.Scope config) {
-    }
+    } 
     
     @Override
     public void close() {

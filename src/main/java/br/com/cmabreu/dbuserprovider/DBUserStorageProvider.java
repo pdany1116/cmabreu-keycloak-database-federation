@@ -76,7 +76,7 @@ public class DBUserStorageProvider implements UserStorageProvider,
 
           if (dbUser == null) {
             ((CachedUserModel) user).invalidate();
-            return false;
+            return false; 
           }
 
           // For now, we'll just invalidate the cache if username or email has changed. Eventually we could check all (or a parametered list of) attributes fetched from the DB.
