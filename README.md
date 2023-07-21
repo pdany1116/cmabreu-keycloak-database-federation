@@ -19,7 +19,7 @@ Your help is welcome if you want to keep this repository up to date.
  - Updated to use Keycloak 21.1.2 version
  - Use the legacy Database Support libs. I don't know how to use the new ones.
  - Changed the log engine (removed the JBossLog annotation)
- - 
+
 ## What is this?
 
 Keycloak User Storage SPI for Relational Databases (Keycloak User Federation, supports postgresql, mysql, oracle and mysql).
