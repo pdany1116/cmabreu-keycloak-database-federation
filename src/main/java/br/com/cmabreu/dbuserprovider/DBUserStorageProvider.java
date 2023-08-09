@@ -210,13 +210,13 @@ public class DBUserStorageProvider implements UserStorageProvider,
     @Override
     public Stream<UserModel> searchForUserStream(RealmModel realm, Map<String, String> params, Integer firstResult, Integer maxResults) {
         logger.info("search for users with params (paged): realm={"+realm.getId()+"} params={"+params+"} firstResult={"+firstResult+"} maxResults={"+maxResults+"}");
-        return internalSearchForUser(params.values().stream().findFirst().orElse(null), realm, null);
+        return internalSearchForUser(params.values().stream().skip(1).findFirst().orElse(null), realm, null);
     }
 
     @Override
     public Stream<UserModel> searchForUserStream(RealmModel realm, Map<String, String> params) {
         logger.info("search for users with params: realm={"+realm.getId()+"} params={"+params+"}");
-        return internalSearchForUser(params.values().stream().findFirst().orElse(null), realm, null);
+        return internalSearchForUser(params.values().stream().skip(1).findFirst().orElse(null), realm, null);
     }
 
 
